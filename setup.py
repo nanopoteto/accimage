@@ -23,6 +23,7 @@ def find_path_with_members(candidates, required_names_we):
             if all(want in members_we for want in required_names_we):
                 return path
 
+# modify anaconda_dir to your directory path
 anaconda_dir = ''
 
 ipp_root = find_path([
