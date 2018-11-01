@@ -1,6 +1,7 @@
 from distutils.core import setup, Extension
 import os
 from os.path import expanduser, exists, join, realpath, basename, dirname
+import sys
 
 
 def find_path(candidates):
@@ -22,10 +23,12 @@ def find_path_with_members(candidates, required_names_we):
             if all(want in members_we for want in required_names_we):
                 return path
 
+anaconda_dir = ''
 
 ipp_root = find_path([
     expanduser('~/intel/ipp'),
     expanduser('/opt/intel/ipp'),
+    anaconda_dir
 ])
 if ipp_root is None:
     raise Exception('Cannot find path to Intel IPP')
@@ -50,15 +53,17 @@ else:
     join(ipp_root, 'lib', 'ia32', 'libippi')
 
 
-jpeg_turbo_root = '/usr/local/opt/jpeg-turbo'
+# jpeg_turbo_root = '/usr/local/opt/jpeg-turbo'
+jpeg_turbo_root = anaconda_dir
 if exists(jpeg_turbo_root):
     jpeg_turbo = {
-        'lib_dir':  join('/usr/local/opt/jpeg-turbo', 'lib'),
-        'include_dir': join('/usr/local/opt/jpeg-turbo', 'include'),
+        'lib_dir':  join(jpeg_turbo_root, 'lib'),
+        'include_dir': join(jpeg_turbo_root, 'include'),
     }
 else:
     jpeg_turbo_header = find_path([
         '/usr/include/jpeglib.h'
+
     ])
     jpeg_turbo_lib = find_path([
         '/usr/lib/x86_64-linux-gnu/libjpeg.so',
