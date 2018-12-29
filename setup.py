@@ -24,7 +24,7 @@ def find_path_with_members(candidates, required_names_we):
                 return path
 
 # modify anaconda_dir to your directory path
-anaconda_dir = sys.argv[1]
+anaconda_dir = sys.argv[2]
 
 ipp_root = find_path([
     expanduser('~/intel/ipp'),
